@@ -98,7 +98,9 @@ npm i three
 
 ## 正式编写three-demo
 
-```js
+### cube
+
+``` js
 // index.ts
 import * as Three from 'three'
 require("./assets/style/reset.styl")
@@ -140,10 +142,44 @@ if (WEBGL.isWebGLAvailable()) {
 }
 ```
 
-```stylus
+``` stylus
 // assets/style/reset.styl
 *
   margin 0
 ```
 
 这样第一个three.js 旋转的正方体demo就ok了
+
+### lines
+``` js
+// index.ts
+import * as Three from 'three'
+require("./assets/style/reset.styl")
+import { WEBGL } from 'three/examples/jsm/WebGL'
+
+const renderer = new Three.WebGLRenderer()
+renderer.setSize(window.innerWidth, window.innerHeight)
+document.body.appendChild(renderer.domElement)
+
+const camera = new Three.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500)
+camera.position.set(0, 0, 100)
+camera.lookAt(0, 0, 0)
+
+const scene = new Three.Scene()
+
+//create a blue LineBasicMaterial
+const material = new Three.LineBasicMaterial({ color: 0x0000ff, linewidth: 3 })
+
+const points = []
+points.push(new Three.Vector3(0, 0, 0))
+points.push(new Three.Vector3(0, -10, 0))
+points.push(new Three.Vector3(10, 0, 0))
+
+const geometry = new Three.BufferGeometry().setFromPoints(points)
+
+const line = new Three.Line(geometry, material)
+
+scene.add(line)
+renderer.render(scene, camera)
+```
+这样，直线就被绘制出来了
