@@ -64,6 +64,8 @@ renderer.render(scene, camera)
 npm i --save-dev @types/tween.js
 ```
 ```js
+import TWEEN from '@tweenjs/tween.js'
+
 const tween = new TWEEN.Tween(mesh.rotation).to({ x: 1, y: 1, z: 1 }, 3000).repeat(Infinity).start()
 tween.update()
 ```
