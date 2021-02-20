@@ -7,4 +7,5 @@ import Stats from 'stats.js'
 // import "./components/gird.ts"
 // import "./components/animate.ts"
 // import "./components/light.ts"
-import "./components/texture.ts"
+// import "./components/texture.ts"
+import "./components/canvas.ts"

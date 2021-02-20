@@ -24,10 +24,15 @@ module.exports = {
           }
         ]
       },
-      {
-        test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
-        loader: 'url-loader?limit=8192&name=images/[hash:8].[name].[ext]'
-      },
+      // {
+      //   test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
+      //   use: [{
+      //     loader: 'file-loader',
+      //     options: {
+      //       outputPath: 'images'
+      //     }
+      //   }]
+      // },
       {
         test: /\.ts$/,
         use: [
