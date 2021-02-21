@@ -31,3 +31,5 @@
 任何图像都可以用来绘制纹理，jpg、gif、canvas、video
 - 图片纹理， THREE.TextureLoader().load() 可以加载图片用于绘制纹理
 - canvas 纹理
+
+## 3d模型加载

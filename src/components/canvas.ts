@@ -126,8 +126,10 @@ import Stats from 'stats.js'
 
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000)
-camera.lookAt(new THREE.Vector3(0, 0, 0))
 camera.position.z = 500
+camera.position.x = 500
+camera.position.y = 500
+camera.lookAt(new THREE.Vector3(0, 0, 0))
 const renderer = new THREE.WebGLRenderer({
   antialias: true
 })
@@ -140,31 +142,59 @@ texture.needsUpdate = true
 class Cube {
   constructor() {
   }
-  public create(x: number = 0, y: number = 0, z: number = 0) {
+  public create(vector3: Array<number>) {
     const cube = new THREE.Mesh(new THREE.BoxGeometry(50, 50, 50), new THREE.MeshBasicMaterial({ map: texture }))
-    cube.position.setX(x)
-    cube.position.setY(y)
-    cube.position.setZ(z)
+    cube.position.setX(vector3[0])
+    cube.position.setY(vector3[1])
+    cube.position.setZ(vector3[2])
     scene.add(cube)
 
-    function animate() {
-      requestAnimationFrame(animate)
+    function addOffset() {
+      requestAnimationFrame(addOffset)
       texture.needsUpdate = true
       cube.rotation.x += 0.01
       cube.rotation.y += 0.01
-      renderer.render(scene, camera)
     }
-    animate()
+    addOffset()
+  }
+
+  public createCubes(cubelist: any[][]) {
+    for (let i = 0; i < cubelist.length; i++) {
+      this.create(cubelist[i])
+    }
   }
 }
 
 const cube = new Cube()
-cube.create()
-cube.create(75)
-cube.create(-75)
-cube.create(0, -75)
-cube.create(0, 75)
-cube.create(75, -75)
-cube.create(-75, 75)
-cube.create(-75, -75)
-cube.create(75, 75)
+const stats = new Stats()
+document.body.appendChild(stats.dom)
+
+animate()
+function animate() {
+  requestAnimationFrame(animate)
+  stats.update()
+  renderer.render(scene, camera)
+}
+
+let cubelist: Array<Array<any>> = []
+const offsetlist = [-225, -150, -75, 0, 75, 150, 225]
+for (let i = 0; i < offsetlist.length; i++) {
+  for (let j = 0; j < offsetlist.length; j++) {
+    for (let k = 0; k < offsetlist.length; k++) {
+      cubelist.push([offsetlist[i], offsetlist[j], offsetlist[k]])
+    }
+  }
+}
+
+// cube.create([0, 0, 0])
+// cube.create(75)
+// cube.create(-75)
+// cube.create(0, -75)
+// cube.create(0, 75)
+// cube.create(75, -75)
+// cube.create(-75, 75)
+// cube.create(-75, -75)
+// cube.create(75, 75)
+
+console.log(cubelist)
+cube.createCubes(cubelist)
