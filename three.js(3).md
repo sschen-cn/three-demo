@@ -33,3 +33,42 @@
 - canvas 纹理
 
 ## 3d模型加载
+
+- vtkLoader
+  vtk模型加载器，栗子中的bunny兔子
+  ``` js
+  let bunny
+  const vtkLoader = new VTKLoader()
+  const bunnyMaterial = new THREE.MeshLambertMaterial({ color: 0xffffff, side: THREE.DoubleSide })
+  vtkLoader.loadAsync('src/assets/models/vtk/bunny.vtk', (e) => {
+    console.log('model loading... ' + Math.floor(e.loaded / e.total * 100) + '%')
+  }).then((geometry: THREE.BufferGeometry) => {
+    geometry.computeVertexNormals()
+    geometry.scale(100, 100, 100)
+    bunny = new THREE.Mesh(geometry, bunnyMaterial)
+    bunny.position.set(20, 0, 0)
+    scene.add(bunny)
+  })
+  ```
+
+- GLTFLoader()
+  glTF文件 .gltf/.glb,最主流的webgl文件格式，栗子中的蜜蜂
+  ``` js
+  const loader = new GLTFLoader()
+  const dracoLoader = new DRACOLoader()
+  const animationMixer = new THREE.AnimationMixer(scene)
+  const clock = new THREE.Clock()
+  dracoLoader.setDecoderPath('/examples/js/libs/draco/')
+  loader.setDRACOLoader(dracoLoader)
+  let bee: GLTF
+  loader.loadAsync('src/assets/models/glTF/Bee.glb', (e) => {
+    console.log('model loading... ' + Math.floor(e.loaded / e.total * 100) + '%')
+  }).then((gltf: GLTF) => {
+    console.log(gltf)
+    scene.add(gltf.scene)
+    bee = gltf
+    const beeTakeOffAndLandAnimationController = animationMixer.clipAction(bee.animations[2])
+    beeTakeOffAndLandAnimationController.play()
+  })
+  ```
+  

@@ -4,6 +4,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
   entry: './src/index.ts',
   devtool: 'source-map',
+  devServer: {
+    headers: {'Access-Control-Allow-Origin': "*"}
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'three-demo.bundle.js',
